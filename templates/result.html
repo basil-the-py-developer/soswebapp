@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .not-found {
+            text-align: center;
+            color: red;
+        }
+        .call-button {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .call-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Student Details</h2>
+        {% if student %}
+            <p><strong>Name:</strong> {{ student.name }}</p>
+            <p><strong>Admission Number:</strong> {{ student.admission_number }}</p>
+            <p><strong>Contact Numbers:</strong></p>
+            <ul>
+                <!-- Loop through each contact number, adding +91 country code -->
+                {% for number in student.contact_numbers.split(',') %}
+                    <li>
+                        +91 {{ number.strip() }}
+                        <a href="tel:+91{{ number.strip() }}" class="call-button">Call</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="not-found">No student found with the given admission number.</p>
+        {% endif %}
+        <a href="/">Search Again</a>
+    </div>
+</body>
+</html>
